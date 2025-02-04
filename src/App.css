@@ -12,6 +12,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 
 .color-box {
@@ -32,6 +33,11 @@ h1 {
   width: auto;
   padding: 1rem;
   border-radius: 1.5rem;
+}
+
+.score-box,
+.game-status {
+  font-size: 1.5rem;
 }
 
 .btn-outline {

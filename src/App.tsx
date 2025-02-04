@@ -132,10 +132,15 @@ function App() {
           </button>
         ))}
       </div>
-      <div data-testid="gameStatus" className={state.resultAnimation}>
+      <div
+        data-testid="gameStatus"
+        className={`game-status ${state.resultAnimation}`}
+      >
         {state.gameStatus ? `Game Status: ${state.gameStatus}` : ""}
       </div>
-      <div data-testid="score">Score: {state.score}</div>
+      <div className="score-box" data-testid="score">
+        Score: {state.score}
+      </div>
 
       <button
         className="btn-outline"
