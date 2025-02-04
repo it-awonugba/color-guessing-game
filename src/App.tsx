@@ -11,11 +11,18 @@ interface GameState {
 
 interface InitializeGameAction {
   type: "StartGame";
+  payload: { targetColor: string; colors: string[] };
 }
 
 interface GradeGameAction {
   type: "GradeGame";
-  payload: { status: string; score: number; resultAnimation: string };
+  payload: {
+    status: string;
+    score: number;
+    resultAnimation: string;
+    colors?: string[];
+    targetColor?: string;
+  };
 }
 
 type GameAction = InitializeGameAction | GradeGameAction;
@@ -31,22 +38,24 @@ const initialState: GameState = {
 function reducer(state: GameState, action: GameAction) {
   switch (action.type) {
     case "StartGame": {
-      const targetColor =
-        state.colors[Math.floor(Math.random() * state.colors.length)];
       return {
         ...state,
         gameStatus: null,
         score: 0,
-        targetColor,
+        targetColor: action.payload.targetColor,
         resultAnimation: "",
+        colors: [...action.payload.colors],
       };
     }
     case "GradeGame": {
       return {
-        ...state,
         gameStatus: action.payload.status,
         score: action.payload.score,
         resultAnimation: action.payload.resultAnimation,
+        colors: action.payload.colors ? action.payload.colors : state.colors,
+        targetColor: action.payload.targetColor
+          ? action.payload.targetColor
+          : state.targetColor,
       };
     }
     default:
@@ -57,20 +66,33 @@ function reducer(state: GameState, action: GameAction) {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const resetGame = () => {
+    const targetColor =
+      state.colors[Math.floor(Math.random() * state.colors.length)];
+    const colors = state.colors.sort(() => Math.random() - 0.5);
+
+    return { targetColor, colors };
+  };
+
   const handleStartNewGame = () => {
+    const { targetColor, colors } = resetGame();
     dispatch({
       type: "StartGame",
+      payload: { targetColor, colors },
     });
   };
 
   const guessTargetColor = (color: string) => {
     if (color === state.targetColor) {
+      const { targetColor, colors } = resetGame();
       dispatch({
         type: "GradeGame",
         payload: {
           status: "Correct!",
           score: state.score + 1,
           resultAnimation: "celebrate",
+          colors,
+          targetColor,
         },
       });
     } else {
