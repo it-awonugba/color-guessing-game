@@ -1,0 +1,79 @@
+h1 {
+  font-size: 2rem;
+}
+
+#root {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.color-box {
+  width: auto;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  border: 2px solid;
+}
+
+.options {
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.color-option {
+  width: auto;
+  padding: 1rem;
+  border-radius: 1.5rem;
+}
+
+.btn-outline {
+  border: 2px solid;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes celebrate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.8);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.fade-out {
+  animation: fadeOut 10s forwards;
+}
+
+.celebrate {
+  animation: celebrate 1s forwards;
+}
+
+@media screen and (min-width: 768px) {
+  h1 {
+    font-size: 4rem;
+  }
+
+  .options {
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
